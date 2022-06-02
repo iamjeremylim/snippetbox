@@ -12,8 +12,10 @@ type application struct {
 	infoLog  *log.Logger
 }
 
+// Parsing runtime config settings for the app
+// Establish dependencies for the handlers
+// Running the HTTP server
 func main() {
-
 	addr := flag.String("addr", ":4000", "HTTP network address")
 	flag.Parse()
 
@@ -24,21 +26,12 @@ func main() {
 		errorLog: errorLog,
 		infoLog:  infoLog,
 	}
-	// Use the http.NewServeMux() function to initialize a new servemux (router), then
-	// register the home function as the handler for the "/" URL pattern.
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", app.home)
-	mux.HandleFunc("/snippet", app.showSnippet)
-	mux.HandleFunc("/snippet/create", app.createSnippet)
-
-	fileServer := http.FileServer(http.Dir("./ui/static/"))
-	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
 	// Initialize a new http.Server struct.
 	srv := &http.Server{
 		Addr:     *addr,
 		ErrorLog: errorLog,
-		Handler:  mux,
+		Handler:  app.routes(),
 	}
 
 	// The value returned from flag.String() function is a pointer to the flag
