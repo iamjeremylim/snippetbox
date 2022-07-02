@@ -1,16 +1,16 @@
 package models
 
-import {
-	"error"
+import (
+	"errors"
 	"time"
-}
+)
 
 var ErrNoRecord = errors.New("models: no matching record found")
 
-type Snipper struct {
-	ID int
-	Title string
+type Snippet struct {
+	ID      int
+	Title   string
 	Content string
-	Create time.Time
+	Created time.Time
 	Expires time.Time
 }
