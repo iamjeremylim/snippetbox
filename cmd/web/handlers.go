@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"html/template"
 	"net/http"
 	"strconv"
 
@@ -31,24 +30,26 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := &templateData{Snippets: s}
+	app.render(w, r, "home.page.tmpl", &templateData{Snippets: s})
 
-	files := []string{
-		"./ui/html/home.page.tmpl",
-		"./ui/html/base.layout.tmpl",
-		"./ui/html/footer.partial.tmpl",
-	}
+	// data := &templateData{Snippets: s}
 
-	ts, err := template.ParseFiles(files...)
-	if err != nil {
-		app.serveError(w, err)
-		return
-	}
+	// files := []string{
+	// 	"./ui/html/home.page.tmpl",
+	// 	"./ui/html/base.layout.tmpl",
+	// 	"./ui/html/footer.partial.tmpl",
+	// }
 
-	err = ts.Execute(w, data)
-	if err != nil {
-		app.serveError(w, err)
-	}
+	// ts, err := template.ParseFiles(files...)
+	// if err != nil {
+	// 	app.serveError(w, err)
+	// 	return
+	// }
+
+	// err = ts.Execute(w, data)
+	// if err != nil {
+	// 	app.serveError(w, err)
+	// }
 }
 
 // Add a showSnippet handler function.
@@ -69,26 +70,26 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := &templateData{Snippet: s}
+	app.render(w, r, "show.page.tmpl", &templateData{Snippet: s})
 
-	files := []string{
-		"./ui/html/show.page.tmpl",
-		"./ui/html/base.layout.tmpl",
-		"./ui/html/footer.partial.tmpl",
-	}
+	// data := &templateData{Snippet: s}
 
-	ts, err := template.ParseFiles(files...)
-	if err != nil {
-		app.serveError(w, err)
-		return
-	}
+	// files := []string{
+	// 	"./ui/html/show.page.tmpl",
+	// 	"./ui/html/base.layout.tmpl",
+	// 	"./ui/html/footer.partial.tmpl",
+	// }
 
-	err = ts.Execute(w, data)
-	if err != nil {
-		app.serveError(w, err)
-	}
+	// ts, err := template.ParseFiles(files...)
+	// if err != nil {
+	// 	app.serveError(w, err)
+	// 	return
+	// }
 
-	// fmt.Fprintf(w, "%v", s)
+	// err = ts.Execute(w, data)
+	// if err != nil {
+	// 	app.serveError(w, err)
+	// }
 }
 
 // Add a createSnippet handler function.
